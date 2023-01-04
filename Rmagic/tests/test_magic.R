@@ -1,6 +1,9 @@
 # To run this file:
 # - Set the working directory to 'R/tests'.
-
+library(reticulate)
+py_discover_config(required_module = "magic")
+import("magic")
+py_config()
 library(Rmagic)
 library(ggplot2)
 library(readr)
@@ -13,7 +16,7 @@ seurat_obj <- function() {
   seurat_raw_data <- t(data)
   rownames(seurat_raw_data) <- colnames(data)
   colnames(seurat_raw_data) <- rownames(data)
-  seurat_obj <- Seurat::CreateSeuratObject(raw.data = seurat_raw_data)
+  seurat_obj <- Seurat::CreateSeuratObject(count = data,raw.data = seurat_raw_data)
 
   # run MAGIC
   data_MAGIC <- magic(data)
